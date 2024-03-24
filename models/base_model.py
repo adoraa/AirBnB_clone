@@ -12,11 +12,14 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initializes a new BaseModel instance."""
         if kwargs:
+            if 'created_at' in kwargs:
+                kwargs['created_at'] = datetime.strptime(
+                                kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            if 'updated_at' in kwargs:
+                kwargs['updated_at'] = datetime.strptime(
+                                kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.strptime(
-                        value, '%Y-%m-%dT%H:%M:%S.%f'))
-                elif key != '__class__':
+                if key != '__class__':
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
@@ -33,11 +36,7 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Returns a dictionary containing all values of __dict__.
-
-        Returns:
-            dict: Dictionary representation of the BaseModel instance.
-        """
+        Returns a dictionary representation of the BaseModel instance."""
         obj_dict = self.__dict__.copy()
         obj_dict['__class__'] = type(self).__name__
         obj_dict['created_at'] = self.created_at.isoformat()
