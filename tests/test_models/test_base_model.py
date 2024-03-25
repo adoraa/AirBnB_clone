@@ -15,6 +15,7 @@ from models.base_model import BaseModel
 from datetime import datetime
 from time import sleep
 
+
 class TestBaseModelInstantiation(unittest.TestCase):
     """Unittests for testing instantiation of the BaseModel class."""
 
@@ -23,8 +24,10 @@ class TestBaseModelInstantiation(unittest.TestCase):
 
     def test_instance(self):
         self.assertIsInstance(self.base_model, BaseModel)
-        self.assertEqual(str(type(self.base_model)), "<class 'models.base_model.BaseModel'>")
+        self.assertEqual(str(type(self.base_model)),
+                         "<class 'models.base_model.BaseModel'>")
         self.assertTrue(issubclass(type(self.base_model), BaseModel))
+
 
 class TestBaseModelInstancePrint(unittest.TestCase):
     """Unittest for testing the __str__ method."""
@@ -33,12 +36,14 @@ class TestBaseModelInstancePrint(unittest.TestCase):
         self.base_model = BaseModel()
 
     def test_str_return(self):
-        self.assertEqual(str(self.base_model),
-                         "[BaseModel] ({}) {}".format(self.base_model.id, self.base_model.__dict__))
+        self.assertEqual(str(self.base_model), "[BaseModel] ({}) {}"
+                         .format(self.base_model.id, self.base_model.__dict__))
 
     def test_str(self):
-        string = "[BaseModel] ({}) {}".format(self.base_model.id, self.base_model.__dict__)
+        string = "[BaseModel] ({}) {}".format(self.base_model.id,
+                                              self.base_model.__dict__)
         self.assertEqual(string, str(self.base_model))
+
 
 class TestBaseModelSaveMethod(unittest.TestCase):
     """Unittest for testing the save method."""
@@ -72,6 +77,7 @@ class TestBaseModelSaveMethod(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.base_model.save(None)
 
+
 class TestBaseModelToDictMethod(unittest.TestCase):
     """Unittest for testing the to_dict method of the BaseModel class."""
 
@@ -90,4 +96,3 @@ class TestBaseModelToDictMethod(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

@@ -7,6 +7,7 @@ deserializes JSON file to instances.
 
 import json
 
+
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
@@ -42,4 +43,3 @@ class FileStorage:
                     self.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
-
