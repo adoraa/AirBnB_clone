@@ -7,6 +7,7 @@ deserializes JSON file to instances.
 
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -43,3 +44,13 @@ class FileStorage:
                     self.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
+
+    def classes(self):
+        """Return a dictionary of supported classes for serialization"""
+        from models import __all__ as models
+        supported_classes = {}
+        for model in models:
+            cls = globals().get(model)
+            if cls and issubclass(cls, BaseModel):
+                supported_classes[model] = cls
+        return supported_classes
