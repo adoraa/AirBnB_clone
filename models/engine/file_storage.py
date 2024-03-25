@@ -6,6 +6,7 @@ deserializes JSON file to instances.
 
 
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -37,7 +38,6 @@ class FileStorage:
                 for key, value in loaded_objects.items():
                     class_name, obj_id = key.split('.')
                     obj_dict = value
-                    # Dynamically create an instance of the class from its name
                     cls = globals()[class_name]
                     obj_instance = cls(**obj_dict)
                     self.__objects[key] = obj_instance
